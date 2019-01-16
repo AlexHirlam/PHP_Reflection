@@ -4,23 +4,52 @@ function request() {
     return \Symfony\Component\HttpFoundation\Request::createFromGlobals();
 }
 
-function register($name, $email)
+function register($username, $user_email, $user_password)
 {
     global $db;
     $ownerId = 0;
     
     try {
-        $query = "INSERT INTO People (firstname, lastname, email) VALUES (:firstname, :lastname, :email)";
+        $query = "INSERT INTO People (username, email, password) VALUES (:username, :email, :password)";
         $stmt = $db->prepare($query);
-        $stmt->bindParam(':firstname', $user_name);
-        $stmt->bindParam(':lastname', $user_name);
+        $stmt->bindParam(':username', $username);
         $stmt->bindParam(':email', $user_email);
+        $stmt->bindParam(':password', $user_password);
         return $stmt->execute();
     } catch (\Exception $e) {
         throw $e;
     }
 }
 
+function findUserByName($username)
+{
+    global $db;
+
+    try {
+        $query = "SELECT * FROM People WHERE username = :username";
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':username', $username);
+        return $stmt->execute();
+    } catch (\Exception $e) {
+        throw $e;
+    }
+}
+
+function findUserByUser($email)
+{
+    global $db;
+
+    try {
+        $query = "SELECT * FROM People WHERE email = :email";
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+
+    } catch (\Exception $e) {
+        throw $e;
+    }
+}
 
 function login($user_id) 
 {

@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/inc/header.php';
 require_once __DIR__ . '/bootstrap.php';
+require_once 'background.php';
 
 $review = getReview(request()->get('review_ID'));
 var_dump($review);
@@ -8,7 +9,7 @@ $gametitle = $review['gametitle'];
 $review_description = $review['review_description'];
 $buttonText = 'Update Review';
 ?>
-<div class="container">
+<div class="container add">
     <div class="well">
         <h2>Update Review</h2>
         
