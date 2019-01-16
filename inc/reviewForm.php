@@ -13,7 +13,7 @@
 <div class="form-group">
     <label for="description" class="col-sm-2 control-label">Overall Rating out of 10</label>
     <div class="col-sm-10">
-     <input type="number" class="form-control" id="overall_rating" name="overall_rating" placeholder="Game Rating" value="<?php if (isset($overall_rating)) echo $overall_rating; ?>">    </div>
+     <input type="number" min="0" max="10" class="form-control" id="overall_rating" name="overall_rating" placeholder="Game Rating" value="<?php if (isset($overall_rating)) echo $overall_rating; ?>">    </div>
 </div>
 <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">

@@ -1,8 +1,9 @@
 <?php
 require_once __DIR__ . '/bootstrap.php';
 require_once __DIR__ . '/inc/header.php';
+require_once 'background.php';
 ?>
-<div class="container">
+<div class="container add">
     <div class="well">
         <h2>Review List</h2>
         <a href="/php_reflection/add.php"><button class="btn btn-active">Add new Review</button></a> 

@@ -45,13 +45,33 @@
     left: 20%;
 }
 
+.home-text {
+    position: relative;
+}
+
 .background-dark {
     background-color: #1f2223;
+    position: absolute;
+    overflow: hidden;
+    width: 100%;
 }
 
 .background-grid {
     opacity: 0.3;
     overflow: hidden;
     position: relative;
+}
 
+.btn {
+    padding: 10px!important;
+    padding-left: 20px!important;
+    padding-right: 20px!important;
+    margin-left: 30px!important;
+}
+
+/* Add page */
+
+.add {
+    position: relative;
+    margin-top: 50px;
 }

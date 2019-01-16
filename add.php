@@ -1,8 +1,9 @@
 <?php
 require_once __DIR__ . '/inc/header.php';
+require_once 'background.php';
 require_once __DIR__ . '/bootstrap.php';
 ?>
-<div class="container">
+<div class="container add">
     <div class="well">
         <h2>Add a review</h2>
         

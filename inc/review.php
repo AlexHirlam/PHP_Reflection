@@ -23,8 +23,8 @@
                 <?php echo $review ['review_ID']; ?>
 
                     <p>
-                    <span><a href="/php_reflection/edit.php?review_id=<?php echo $review['review_ID']; ?>">Edit</a> | </span>
-                    <span><a href="/php_reflection/delete.php?review_id=<?php echo $review['review_ID']; ?>">Delete</a></span>
+                    <span><a href="/php_reflection/edit.php?review_ID=<?php echo $review['review_ID']; ?>">Edit</a> | </span>
+                    <span><a href="/php_reflection/procedures/deleteReview.php?review_ID=<?php echo $review['review_ID']; ?>">Delete</a></span>
                     </p>
             </div>
         </div>

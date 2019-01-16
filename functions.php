@@ -10,7 +10,7 @@ function register($name, $email)
     $ownerId = 0;
     
     try {
-        $query = "INSERT INTO Users (firstname, lastname, email) VALUES (:firstname, :lastname, :email)";
+        $query = "INSERT INTO People (firstname, lastname, email) VALUES (:firstname, :lastname, :email)";
         $stmt = $db->prepare($query);
         $stmt->bindParam(':firstname', $user_name);
         $stmt->bindParam(':lastname', $user_name);
@@ -60,7 +60,7 @@ function getReview($review_id)
     global $db;
     
     try {
-        $query = "SELECT * FROM Reviews WHERE review_id = ?";
+        $query = "SELECT * FROM GameReview WHERE review_id = ?";
         $stmt = $db->prepare($query);
         $stmt->bindParam(1, $review_id);
         $stmt->execute();
@@ -76,7 +76,7 @@ function addReview($gametitle, $review_description, $overall_rating)
     global $db;
     
         try {
-            $query = "INSERT INTO GameReview ( gametitle, review_description, overall_rating ) VALUES (:review_id, :gametitle, :review_description, :overall_rating )";
+            $query = "INSERT INTO GameReview ( gametitle, review_description, overall_rating ) VALUES (:gametitle, :review_description, :overall_rating )";
             $stmt = $db->prepare($query);           
             $stmt->bindParam(':gametitle', $gametitle);
             $stmt->bindParam(':review_description', $review_description);
@@ -88,30 +88,53 @@ function addReview($gametitle, $review_description, $overall_rating)
 }
 
 
-function editReview($review_id, $gametitle, $review_description, $overall_rating)
+function editReview($review_ID, $gametitle, $review_description, $overall_rating)
 {
     global $db;
     
     try {
-        $query = "UPDATE Reviews SET gametitle=:gametitle, review_description=:review_description, overall_rating=:overall_rating WHERE review_id=:review_id";
+        $query = "UPDATE GameReview SET gametitle=:gametitle, review_description=:review_description, overall_rating=:overall_rating WHERE review_ID=:review_ID";
 
         $stmt = $db->prepare($query);
         $stmt->bindParam(':gametitle', $gametitle);
         $stmt->bindParam(':review_description', $review_description);
         $stmt->bindParam(':overall_rating', $overall_rating);
-        $stmt->bindParam(':review_id', $review_id);
+        $stmt->bindParam(':review_ID', $review_ID);
         return $stmt->execute();
     } catch (\Exception $e) {
         throw $e;
     }
 }
 
-function voteReview()
-{
-
+function vote($review_id, $score) {
+    global $db;
+    $userId = 0;
+    
+    try {
+        $query = 'INSERT INTO votes (book_id, user_id, value) VALUES (:bookId, :userId, :score)';
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':bookId', $bookId);
+        $stmt->bindParam(':userId', $userId);
+        $stmt->bindParam(':score', $score);
+        $stmt->execute();
+    } catch (\Exception $e) {
+        die('Something happened with voting. Please try again');
+    }
 }
 
-function deleteReview()
-{
+function deleteReview($review_ID) {
+    global $db;
+    try {
+       $stmt = $db->prepare("DELETE from GameReview where review_ID = ? ");
+       $stmt->execute([$review_ID]);
+       return true;
+    } catch (\Exception $e) {
+       return false;
+    }
+  }
 
-} 
+  function Redirect($url, $permanent = false)
+  {
+      header('Location: ' . $url, true, $permanent ? 301 : 302);
+      exit();
+  }
