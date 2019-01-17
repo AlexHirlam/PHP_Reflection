@@ -5,8 +5,6 @@ require_once 'background.php';
 ?>
 
 
-
-
 <div class="container add">
     <div class="well col-sm-6 col-sm-offset-3">
 

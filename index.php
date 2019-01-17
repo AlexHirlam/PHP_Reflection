@@ -6,9 +6,5 @@ require_once 'background.php';
 require_once 'inc/home.php';
 
 
-
-
-
-
 require_once 'inc/footer.php';
 ?>

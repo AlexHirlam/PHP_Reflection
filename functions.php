@@ -84,14 +84,14 @@ function getAllReviews()
     }
 }
 
-function getReview($review_id) 
+function getReview($review_ID) 
 {
     global $db;
     
     try {
-        $query = "SELECT * FROM GameReview WHERE review_id = ?";
+        $query = "SELECT * FROM GameReview WHERE review_ID = ?";
         $stmt = $db->prepare($query);
-        $stmt->bindParam(1, $review_id);
+        $stmt->bindParam(1, $review_ID);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     } catch (\Exception $e) {
@@ -135,7 +135,7 @@ function editReview($review_ID, $gametitle, $review_description, $overall_rating
     }
 }
 
-function vote($review_id, $score) {
+function vote($review_ID, $score) {
     global $db;
     $userId = 0;
     
