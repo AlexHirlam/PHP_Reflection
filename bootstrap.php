@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <head>
 
     <link rel="stylesheet" href="css/index.css">
@@ -12,3 +13,19 @@ require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/functions.php';
 require_once __DIR__ . '/inc/connection.php';
 
+=======
+<head>
+
+    <link rel="stylesheet" href="css/index.css">
+    <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+</head>
+
+<?php
+
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/functions.php';
+require_once __DIR__ . '/inc/connection.php';
+
+>>>>>>> 315850a75637b7e18d1aa8ed178a453ed1ff67dd
