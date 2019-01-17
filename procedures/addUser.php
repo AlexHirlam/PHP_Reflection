@@ -9,8 +9,7 @@ $password = request()->get('password');
 $confirmPassword = request()->get('confirm_password');
 
 if ($password != $confirmPassword) {
-    // Redirect('/php_reflection/register.php', false);
-    Redirect('/register.php', false);
+    Redirect('/php_reflection/register.php', false);
 }
     
 $user = findUserByName($username);
