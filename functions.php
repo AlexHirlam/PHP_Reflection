@@ -15,7 +15,8 @@ function register($username, $user_email, $user_password)
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':email', $user_email);
         $stmt->bindParam(':password', $user_password);
-        return $stmt->execute();
+        $stmt->execute();
+        return findUserByName($username);
     } catch (\Exception $e) {
         throw $e;
     }
@@ -29,7 +30,8 @@ function findUserByName($username)
         $query = "SELECT * FROM People WHERE username = :username";
         $stmt = $db->prepare($query);
         $stmt->bindParam(':username', $username);
-        return $stmt->execute();
+        $stmt->execute();
+        return $stmt->fetchAll();
     } catch (\Exception $e) {
         throw $e;
     }
@@ -50,6 +52,12 @@ function findUserByUser($email)
         throw $e;
     }
 }
+
+function isAuthorised() 
+{
+
+}
+
 
 function login($user_id) 
 {
@@ -84,14 +92,14 @@ function getAllReviews()
     }
 }
 
-function getReview($review_id) 
+function getReview($review_ID) 
 {
     global $db;
     
     try {
-        $query = "SELECT * FROM GameReview WHERE review_id = ?";
+        $query = "SELECT * FROM GameReview WHERE review_ID = ?";
         $stmt = $db->prepare($query);
-        $stmt->bindParam(1, $review_id);
+        $stmt->bindParam(1, $review_ID);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     } catch (\Exception $e) {
@@ -135,7 +143,7 @@ function editReview($review_ID, $gametitle, $review_description, $overall_rating
     }
 }
 
-function vote($review_id, $score) {
+function vote($review_ID, $score) {
     global $db;
     $userId = 0;
     
