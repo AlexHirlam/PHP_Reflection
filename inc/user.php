@@ -1,3 +1,4 @@
+
 <div class="media well">
 
             <div class="media-body">
@@ -17,4 +18,5 @@
                     <span><a href="/php_reflection/delete.php?review_id=<?php echo $review['review_id']; ?>">Delete</a></span>
                     </p>
             </div>
+
         </div>

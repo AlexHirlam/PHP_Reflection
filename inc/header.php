@@ -1,3 +1,4 @@
+
 <div class="header container-fluid ">
 
     <div class="left-header">
@@ -9,4 +10,5 @@
         <a href="/php_reflection/register.php"><button class="btn-lg btn-default btn-pos"> Register </button></a>
         <a href="/login.php"><button class="btn-lg btn-default"> Login </button></a>
     </div>
+
 </div>

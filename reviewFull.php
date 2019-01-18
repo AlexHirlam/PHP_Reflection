@@ -1,3 +1,4 @@
+
 <?php
 
 require_once __DIR__ . '/inc/header.php';
@@ -46,3 +47,4 @@ $username = $user['username'];
 
     <?php
     require_once __DIR__ . '/footer.php';
+
