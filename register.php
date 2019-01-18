@@ -9,7 +9,7 @@ require_once 'background.php';
     <div class="well col-sm-6 col-sm-offset-3">
 
 
-        <form class="form-signin" method="post" action="/procedures/addUser.php">
+        <form class="form-signin" method="post" action="/php_reflection/procedures/addUser.php">
             <h2 class="form-signin-heading">Registration</h2>
             <?php //print display_errors(); ?>
             <label for="inputUsername" class="sr-only">Username</label>
