@@ -1,8 +1,9 @@
-
 {
     "name": "scion/php_reflection",
     "require": {
-        "composer/composer": "^1.8"
+        "composer/composer": "^1.8",
+        "firebase/php-jwt": "^5.0",
+        "vlucas/phpdotenv": "^2.4"
     },
     "authors": [
         {
@@ -11,4 +12,3 @@
         }
     ]
 }
-

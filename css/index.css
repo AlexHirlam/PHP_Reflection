@@ -1,6 +1,7 @@
 
 body {
     font-family: 'Quicksand', sans-serif!important;
+    background-image: url('/php_reflection/images/game-grid.jpg')!important;
 }
 
 .header {
@@ -11,8 +12,13 @@ body {
 
 .footer {
     background-color: #0B4F6C;
-    display: flex;
-    justify-content: center;
+
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    position: relative;
+
 }
 
 .left-header {
@@ -71,8 +77,11 @@ body {
     opacity: 0.3;
     overflow: hidden;
     position: relative;
+    background-image: url('/php_reflection/images/game-grid.jpg');
     background-repeat: repeat-y;
 }
+
+
 
 .home .btn {
     padding: 10px!important;

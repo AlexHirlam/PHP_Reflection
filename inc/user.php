@@ -11,6 +11,7 @@
                 echo "<br />";
                 echo $user ['email']; 
                 echo $user ['role_id'];
+                echo $user ['password'];
                 ?>
                 
 

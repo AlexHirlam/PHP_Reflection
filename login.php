@@ -1,12 +1,18 @@
+<?php
+require_once __DIR__ . '/bootstrap.php';
+require_once __DIR__ . '/inc/header.php';
 
 
-<div class="container">
+?>
+
+<div class="container add">
     <div class="well col-sm-6 col-sm-offset-3">
         <form class="form-signin" method="post" action="/procedures/doLogin.php">
             <h2 class="form-signin-heading">Please sign in</h2>
-            <?php // print display_errors(); ?>
-            <label for="inputEmail" class="sr-only">Email address</label>
-            <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus>
+            <?php // echo display_errors(); ?>
+            <?php // echo display_success(); ?>
+            <label for="username" class="sr-only">Username</label>
+            <input type="username" id="username" name="emausernameil" class="form-control" placeholder="Username" required autofocus>
             <br>
             <label for="inputPassword" class="sr-only">Password</label>
             <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
@@ -15,3 +21,5 @@
         </form>
     </div>
 </div>
+
+

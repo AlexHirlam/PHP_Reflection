@@ -8,7 +8,7 @@
 
     <div class="right-header">
         <a href="/php_reflection/register.php"><button class="btn-lg btn-default btn-pos"> Register </button></a>
-        <a href="/login.php"><button class="btn-lg btn-default"> Login </button></a>
+        <a href="/php_reflection/login.php"><button class="btn-lg btn-default"> Login </button></a>
     </div>
 
 </div>
