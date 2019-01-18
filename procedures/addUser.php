@@ -9,26 +9,16 @@ $password = request()->get('password');
 $confirmPassword = request()->get('confirm_password');
 
 if ($password != $confirmPassword) {
-    Redirect('/register.php', false);
+    Redirect('/php_reflection/register.php', false);
 }
     
 $user = findUserByName($username);
 if (!empty($user)) {
-    Redirect('/register.php', false);
+    Redirect('/php_reflection/register.php', false);
 }
 
-    try {
-        $newReview = addReview($username, $email, $password, $confirmPassword);
-        $response = \Symfony\Component\HttpFoundation\Response::create(null, \Symfony\Component\HttpFoundation\Response::HTTP_FOUND,['Location' => '/../php_reflection/reviews.php']);
-        $response->send();
-        exit;
-    } catch (\Exception $e) {
-        $response = \Symfony\Component\HttpFoundation\Response::create(null, \Symfony\Component\HttpFoundation\Response::HTTP_FOUND,['Location' => '/../php_reflection/add.php']);
-        $response->send();
-        exit;
-        $e->getMessage();
-    }
+$hashed = password_hash($password, PASSWORD_BCRYPT);
 
+$user = register($username, $email, $hashed);
 
-
-
+Redirect('/php_reflection', false);    

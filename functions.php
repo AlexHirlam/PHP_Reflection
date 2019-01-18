@@ -1,10 +1,11 @@
+
 <?php
 
 function request() {
     return \Symfony\Component\HttpFoundation\Request::createFromGlobals();
 }
 
-function register($username, $user_email, $user_password)
+function register($username, $email, $password)
 {
     global $db;
     $ownerId = 0;
@@ -13,9 +14,10 @@ function register($username, $user_email, $user_password)
         $query = "INSERT INTO People (username, email, password) VALUES (:username, :email, :password)";
         $stmt = $db->prepare($query);
         $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':email', $user_email);
-        $stmt->bindParam(':password', $user_password);
-        return $stmt->execute();
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':password', $password);
+        $stmt->execute();
+        return findUserByName($username);
     } catch (\Exception $e) {
         throw $e;
     }
@@ -29,7 +31,8 @@ function findUserByName($username)
         $query = "SELECT * FROM People WHERE username = :username";
         $stmt = $db->prepare($query);
         $stmt->bindParam(':username', $username);
-        return $stmt->execute();
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     } catch (\Exception $e) {
         throw $e;
     }
@@ -167,3 +170,4 @@ function deleteReview($review_ID) {
       header('Location: ' . $url, true, $permanent ? 301 : 302);
       exit();
   }
+

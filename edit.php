@@ -1,3 +1,4 @@
+
 <?php
 
 require_once __DIR__ . '/inc/header.php';
@@ -22,4 +23,5 @@ $buttonText = 'Update Review';
     </div>
 </div>
 <?php
+
 require_once __DIR__ . '/inc/footer.php';
