@@ -10,7 +10,6 @@
                 echo $user['username']; 
                 echo "<br />";
                 echo $user ['email']; 
-                echo $user ['password'];
                 ?>
                 
 
