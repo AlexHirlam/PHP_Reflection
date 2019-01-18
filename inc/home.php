@@ -1,7 +1,8 @@
 
-    <div class="container well home-text">
-        <h1>This is some sample text for the home page </h1>
-        <p> A reasonably short paragraph explaing the site and what not. </p>
+    <div class="container well home-text add">
+        <h1>About this site: </h1>
+        <p> This small site's purpose is to show off the PHP related skills I have obtained over the last two weeks. 
+        This site uses a number of different functionality that I have coded myself.  </p>
         <div class="container home">
             <a href="/php_reflection/add.php"><button class="btn btn-success">Add New Review</button></a>
             <a href="/php_reflection/reviews.php"><button class="btn btn-info">View All Reviews</button></a>

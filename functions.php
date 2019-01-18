@@ -11,7 +11,7 @@ function register($username, $email, $password)
     $ownerId = 0;
     
     try {
-        $query = "INSERT INTO People (username, email, password) VALUES (:username, :email, :password)";
+        $query = "INSERT INTO People (username, email, password, role_id) VALUES (:username, :email, :password, 2)";
         $stmt = $db->prepare($query);
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':email', $email);

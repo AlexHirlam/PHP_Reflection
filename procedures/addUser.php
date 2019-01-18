@@ -17,6 +17,7 @@ if (!empty($user)) {
     Redirect('/php_reflection/register.php', false);
 }
 
+
 $hashed = password_hash($password, PASSWORD_BCRYPT);
 
 $user = register($username, $email, $hashed);

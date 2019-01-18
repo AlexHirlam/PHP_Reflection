@@ -51,12 +51,13 @@ body {
 .home {
     display: flex;
     position: absolute;
-    top: 50%;
+    top: 65%;
     left: 20%;
 }
 
 .home-text {
     position: relative;
+    height: 235px;
 }
 
 .background-dark {
@@ -79,6 +80,8 @@ body {
     padding-right: 20px!important;
     margin-left: 30px!important;
 }
+
+
 
 /* Review List Container */
 
