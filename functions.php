@@ -38,6 +38,7 @@ function findUserByName($username)
     }
 }
 
+
 function findUserByUser($email)
 {
     global $db;
@@ -136,13 +137,13 @@ function editReview($review_ID, $gametitle, $review_description, $overall_rating
 
 function vote($review_ID, $score) {
     global $db;
-    $userId = 0;
+    $ID = 0;
     
     try {
-        $query = 'INSERT INTO votes (book_id, user_id, value) VALUES (:bookId, :userId, :score)';
+        $query = 'INSERT INTO votes (book_id, user_id, value) VALUES (:bookId, :ID, :score)';
         $stmt = $db->prepare($query);
         $stmt->bindParam(':bookId', $bookId);
-        $stmt->bindParam(':userId', $userId);
+        $stmt->bindParam(':ID', $ID);
         $stmt->bindParam(':score', $score);
         $stmt->execute();
     } catch (\Exception $e) {
@@ -174,6 +175,61 @@ function deleteReview($review_ID) {
       exit;
   }
 
+  function decodeJwt($prop = null) {
+    \Firebase\JWT\JWT::$leeway = 1;
+    $jwt = \Firebase\JWT\JWT::decode(
+        request()->cookies->get('access_token'),
+        getenv('SECRET_KEY'),
+        ['HS256']
+    );
+    
+    if ($prop === null) {
+        return $jwt;
+    }
+    
+    return $jwt->{$prop};
+}
+
+
+function findUserByAccessToken() {
+    global $db;
+    
+    try {
+        $userId = decodeJwt('sub');
+    } catch (\Exception $e) {
+        throw $e;
+    }
+    
+    try {
+        $query = "SELECT * FROM People WHERE ID = :userId";
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':userId', $userId);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+        
+    } catch (\Exception $e) {
+        throw $e;
+    }
+}
+
+
+  function updatePassword($password, $userId) 
+  {
+    global $db;
+
+    try {
+        $query = 'UPDATE People SET password=:password WHERE id = :userId';
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':userId', $userId);
+        $stmt->execute();
+    } catch (\Exception $e) {
+    return false;
+    }
+    return true;
+  }
+
+
   function isAuthenticated() 
   {
       if (!request()->cookies->has('access_token'))
@@ -182,12 +238,7 @@ function deleteReview($review_ID) {
       }
 
       try {
-        \Firebase\JWT\JWT::$leeway = 1;
-        \Firebase\JWT\JWT::decode(
-            request()->cookies->get('access_token'),
-            getenv('SECRET_KEY'),
-            ['HS256']
-        );
+        decodeJwt();
         return true;
       } catch (\Exception $e) {
           return false;
