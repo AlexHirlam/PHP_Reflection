@@ -4,6 +4,7 @@
 require_once __DIR__ . '/inc/header.php';
 require_once __DIR__ . '/bootstrap.php';
 require_once 'background.php';
+requireAuth();
 
 $review = getReview(request()->get('review_ID'));
 var_dump($review);
@@ -22,5 +23,3 @@ $buttonText = 'Update Review';
         
     </div>
 </div>
-
-

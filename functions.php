@@ -54,10 +54,6 @@ function findUserByUser($email)
     }
 }
 
-function login($user_id) 
-{
-
-}
 
 function getAllUsers() 
 {
@@ -165,9 +161,77 @@ function deleteReview($review_ID) {
     }
   }
 
-  function Redirect($url, $permanent = false)
+  function redirect($path, $extra = [])
   {
-      header('Location: ' . $url, true, $permanent ? 301 : 302);
-      exit();
+      $response = \Symfony\Component\HttpFoundation\Response::create(null, \Symfony\Component\HttpFoundation\Response::HTTP_FOUND, ['Location' => $path]);
+      if (key_exists('cookies', $extra)) {
+          foreach ($extra['cookies'] as $cookie)
+          {
+              $response->headers->setCookie($cookie);
+          }
+      }
+      $response->send();
+      exit;
   }
 
+  function isAuthenticated() 
+  {
+      if (!request()->cookies->has('access_token'))
+      {
+          return false;
+      }
+
+      try {
+        \Firebase\JWT\JWT::$leeway = 1;
+        \Firebase\JWT\JWT::decode(
+            request()->cookies->get('access_token'),
+            getenv('SECRET_KEY'),
+            ['HS256']
+        );
+        return true;
+      } catch (\Exception $e) {
+          return false;
+      }
+  }
+
+  function requireAuth() {
+      if(!isAuthenticated()) {
+          $accessToken = new \Symfony\Component\HttpFoundation\Cookie("access_token", "Expired",
+          time() -3600, '/', getenv('COOKIE_DOMAIN'));
+          redirect('/php_reflection/login.php', ['cookies' => [$accessToken]]);
+      }
+  }
+
+  function display_errors() {
+      global $session;
+
+      if(!$session->getFlashBag()->has('error')) {
+          return;
+      }
+
+      $messages = $session->getFlashBag()->get('error');
+      $response = '<div class="alert alert-danger alert-dismissable">';
+      foreach ($messages as $message) {
+          $response .= "{$message}<br />";
+      }
+      $response .= '</div>';
+
+      return $response;
+  }
+
+  function display_success() {
+      global $session;
+
+      if (!$session->getFlashBag()->has('error')) {
+          return;
+      }
+
+      $messages = $session->getFlashBag()->get('success');
+      $response = '<div class="alert alert-success alert-dismissable">';
+      foreach ($messages as $message) {
+          $response .= "{$message}<br />";
+      }
+      $response .= '</div>';
+
+      return $response;
+  }

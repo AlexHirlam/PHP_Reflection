@@ -21,6 +21,10 @@ body {
 
 }
 
+.login {
+    color:white;
+}
+
 .left-header {
     display: flex;
     position: relative;

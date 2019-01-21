@@ -9,12 +9,12 @@ $password = request()->get('password');
 $confirmPassword = request()->get('confirm_password');
 
 if ($password != $confirmPassword) {
-    Redirect('/php_reflection/register.php', false);
+    redirect('/php_reflection/register.php');
 }
     
 $user = findUserByName($username);
 if (!empty($user)) {
-    Redirect('/php_reflection/register.php', false);
+    redirect('/php_reflection/register.php');
 }
 
 
@@ -22,4 +22,4 @@ $hashed = password_hash($password, PASSWORD_BCRYPT);
 
 $user = register($username, $email, $hashed);
 
-Redirect('/php_reflection', false);    
+redirect('/php_reflection');    
