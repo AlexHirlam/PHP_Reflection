@@ -21,13 +21,16 @@ $username = $user['username'];
 
             <div class="media-body">
 
+
                 <?php 
+
                 echo "<h2 class='media-title'>";
                 echo $review['gametitle']; 
                 echo "</h2>";
                 echo "<h4>";
                 echo "    - Written By: ";
-                echo $user['usename'];
+                echo $review['createdBy'];
+
                 echo "</h4>";
 
                 echo "<br />";

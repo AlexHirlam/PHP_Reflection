@@ -8,14 +8,15 @@ function request() {
 function register($username, $email, $password)
 {
     global $db;
-    $ownerId = 0;
+    $owner_id = 0;
     
     try {
-        $query = "INSERT INTO People (username, email, password, role_id) VALUES (:username, :email, :password, 2)";
+        $query = "INSERT INTO People (username, email, password, role_id, owner_id) VALUES (:username, :email, :password, 2, :ownder_id)";
         $stmt = $db->prepare($query);
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':ownder_id, $owner_id');
         $stmt->execute();
         return findUserByName($username);
     } catch (\Exception $e) {
@@ -100,16 +101,17 @@ function getReview($review_ID)
 }
 
 
-function addReview($gametitle, $review_description, $overall_rating) 
+function addReview($gametitle, $review_description, $overall_rating, $createdBy) 
 {
     global $db;
     
         try {
-            $query = "INSERT INTO GameReview ( gametitle, review_description, overall_rating ) VALUES (:gametitle, :review_description, :overall_rating )";
+            $query = "INSERT INTO GameReview ( gametitle, review_description, overall_rating, createdBy) VALUES (:gametitle, :review_description, :overall_rating, :createdBy )";
             $stmt = $db->prepare($query);           
             $stmt->bindParam(':gametitle', $gametitle);
             $stmt->bindParam(':review_description', $review_description);
             $stmt->bindParam(':overall_rating', $overall_rating);
+            $stmt->bindParam(':createdBy', $createdBy);
             return $stmt->execute();
         } catch (\Exception $e) {
             throw $e;
@@ -175,20 +177,6 @@ function deleteReview($review_ID) {
       exit;
   }
 
-  function decodeJwt($prop = null) {
-    \Firebase\JWT\JWT::$leeway = 1;
-    $jwt = \Firebase\JWT\JWT::decode(
-        request()->cookies->get('access_token'),
-        getenv('SECRET_KEY'),
-        ['HS256']
-    );
-    
-    if ($prop === null) {
-        return $jwt;
-    }
-    
-    return $jwt->{$prop};
-}
 
 
 function findUserByAccessToken() {
@@ -228,6 +216,22 @@ function findUserByAccessToken() {
     }
     return true;
   }
+
+
+  function decodeJwt($prop = null) {
+    \Firebase\JWT\JWT::$leeway = 1;
+    $jwt = \Firebase\JWT\JWT::decode(
+        request()->cookies->get('access_token'),
+        getenv('SECRET_KEY'),
+        ['HS256']
+    );
+    
+    if ($prop === null) {
+        return $jwt;
+    }
+    
+    return $jwt->{$prop};
+}
 
 
   function isAuthenticated() 
@@ -286,3 +290,87 @@ function findUserByAccessToken() {
 
       return $response;
   }
+
+  function requireAdmin() 
+  {
+    global $session;
+
+    if(!isAuthenticated()) {
+        $accessToken = new \Symfony\Component\HttpFoundation\Cookie("access_token", "Expired",
+        time() -3600, '/', getenv('COOKIE_DOMAIN'));
+        redirect('/php_reflection/login.php', ['cookies' => [$accessToken]]);
+    }
+
+
+    try {
+            if (! decodeJwt('is_admin')) {
+                $session->getFlashBag()->add('error', 'Not Authorized');
+                redirect('/php_reflection');
+            }
+        } catch (\Exception $e) {
+            $accessToken = new \Symfony\Component\HttpFoundation\Cookie("access_token", "Expired",
+            time() -3600, '/', getenv('COOKIE_DOMAIN'));
+            redirect('/php_reflection/login.php', ['cookies' => [$accessToken]]);
+            }
+        }
+  
+
+    function isAdmin()
+    {
+        if (!isAuthenticated())
+        {
+            return false;
+        }
+
+        try {
+            $isAdmin = decodeJwt('is_admin');
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        return (boolean)$isAdmin;
+    }
+
+    function isOwner($owner_id) 
+    {
+        if (!isAuthenticated())
+        {
+            return false;
+        }
+
+        try {
+            $userId = decodeJwt('sub');
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        return $owner_id == $userId;
+    }
+
+    function promote($userId) 
+    {
+        global $db;
+
+        try {
+            $query = "UPDATE People SET role_id=1 WHERE ID= ?";
+            $stmt = $db->prepare($query);
+            $stmt->bindParam(1, $userId);
+            $stmt->execute();
+        } catch (\Exception $e) {
+
+        }
+    }
+
+    function demote($userId) 
+    {
+        global $db;
+
+        try {
+            $query = "UPDATE People SET role_id=2 WHERE ID= ?";
+            $stmt = $db->prepare($query);
+            $stmt->bindParam(1, $userId);
+            $stmt->execute();
+        } catch (\Exception $e) {
+
+        }
+    }

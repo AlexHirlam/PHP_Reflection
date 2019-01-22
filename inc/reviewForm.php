@@ -8,7 +8,7 @@
 <div class="form-group">
     <label for="description" class="col-sm-2 control-label">Description</label>
     <div class="col-sm-10">
-        <textarea name="review_description" class="form-control" rows="5" maxlength="1000" placeholder="Your Review of the game"><?php if (isset($review_description)) echo $review_description; ?></textarea>
+        <textarea name="review_description" class="form-control" rows="5" maxlength="100000" placeholder="Your Review of the game"><?php if (isset($review_description)) echo $review_description; ?></textarea>
     </div>
 </div>
 <div class="form-group">

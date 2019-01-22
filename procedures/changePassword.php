@@ -25,7 +25,7 @@ if (!password_verify($currPassword, $user['password'])) {
     redirect('/php_reflection/account.php');
 }
 
-$updated = updatePassword(password_hash($newPassword, PASSWORD_DEFAULT), $user['id']);
+$updated = updatePassword(password_hash($newPassword, PASSWORD_DEFAULT), $user['ID']);
 
 if (!$updated) {
     $session->getFlashBag()->add('error', 'Could not update password, Please try again.');
@@ -34,3 +34,13 @@ if (!$updated) {
 
 $session->getFlashBag()->add('success', 'Password Updated');
 redirect('/php_reflection/account.php');
+
+
+$jwt = \Firebase\JWT\JWT::encode([
+    'iss' => request()->getBaseUrl(),
+    'sub' => "{$user['ID']}",
+    'exp' => $expTime,
+    'iat' => time(),
+    'nbf' => time(),
+    'is_admin' => $user['role_id'] == 1
+    ], getenv("SECRET_KEY"), 'HS256');

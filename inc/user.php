@@ -10,8 +10,12 @@
                 echo $user['username']; 
                 echo "<br />";
                 echo $user ['email']; 
+                echo "<br />";
                 echo $user ['role_id'];
+                echo "<br />";
                 echo $user ['password'];
+                echo "<br />";
+                echo $user ['owner_id'];
                 ?>
                 
 

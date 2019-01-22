@@ -9,8 +9,8 @@ $review = getReview(request()->get('review_ID'));
 $gametitle = $review['gametitle'];
 $review_description = $review['review_description'];
 
-$user = findUserByName(request()->get('username'));
-$username = $user['username'];
+// $user = findUserByName(request()->get('username'));
+// $username = $user['username'];
 
 ?> 
 
@@ -22,7 +22,7 @@ $username = $user['username'];
     echo "</h2>";
     echo "<h3>";
     echo "    - Written By: ";
-    echo $user['usename'];
+    echo $review['createdBy'];
     echo "</h3>";
 
     echo "<br />";

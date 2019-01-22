@@ -1,5 +1,6 @@
 
 <div class="container well home-text add">
+<?php print display_errors(); ?>
         <h1>About this site: </h1>
         <p> This small site's purpose is to show off the PHP related skills I have obtained over the last two weeks. 
         This site uses a number of different functionality that I have coded myself.  </p>
